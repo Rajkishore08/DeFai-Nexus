@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { LineChart, Twitter, MessageSquare, TrendingUp, Eye, Plus, Search, ArrowUpRight, Info, BarChart3, AlertCircle, Timer } from 'lucide-react';
+import { LineChart, Twitter, MessageSquare, TrendingUp, Eye, Plus, Search, ArrowUpRight, Info, BarChart3, AlertCircle, Timer, Check } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
 
 const TokenPredictor = () => {
