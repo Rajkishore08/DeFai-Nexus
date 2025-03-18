@@ -18,6 +18,8 @@ const Header = () => {
     { name: 'Token Predictor', path: '/token-predictor' },
     { name: 'Meme Index', path: '/meme-index' },
     { name: 'MEV Protection', path: '/mev-protection' },
+    { name: 'Portfolio', path: '/portfolio' },
+    { name: 'Trade Analysis', path: '/trade-analysis' },
   ];
 
   return (
@@ -34,7 +36,7 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6">
-            {navLinks.slice(0, 4).map((link) => (
+            {navLinks.slice(0, 5).map((link) => (
               <Link
                 key={link.path}
                 to={link.path}

@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, TrendingUp, BarChart3, Zap, LineChart, CandlestickChart, Sparkles, Shield } from 'lucide-react';
+import { ArrowUpRight, TrendingUp, BarChart3, Zap, LineChart, CandlestickChart, Sparkles, Shield, PieChart, FileText } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 
 const features = [
@@ -45,6 +45,18 @@ const features = [
     description: 'Shield your transactions from front-running attacks with AI-powered defense mechanisms.',
     icon: <Shield className="h-10 w-10 text-defi-violet" />,
     path: '/mev-protection',
+  },
+  {
+    title: 'Portfolio Managers',
+    description: 'AI manages your investments across DeFi platforms for optimal returns and risk balance.',
+    icon: <PieChart className="h-10 w-10 text-defi-blue" />,
+    path: '/portfolio',
+  },
+  {
+    title: 'Trade Analysis Agents',
+    description: 'AI audits your trading history and provides actionable insights to improve performance.',
+    icon: <FileText className="h-10 w-10 text-defi-pink" />,
+    path: '/trade-analysis',
   },
   {
     title: 'Portfolio Dashboard',
