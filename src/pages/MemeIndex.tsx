@@ -8,8 +8,8 @@ const MemeIndex = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="flex-grow container mx-auto px-4 pt-20 pb-8">
-        <div className="mt-6 mb-4">
+      <main className="flex-grow container mx-auto px-4 py-8 pt-20">
+        <div className="mt-6">
           <BackButton />
         </div>
         <PlaceholderContent 
