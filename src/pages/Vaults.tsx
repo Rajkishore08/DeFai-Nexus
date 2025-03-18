@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import BackButton from '@/components/shared/BackButton';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import VaultsList from '@/components/vaults/VaultsList';
 import UserVaults from '@/components/vaults/UserVaults';
@@ -14,7 +15,10 @@ const Vaults = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="flex-grow container mx-auto px-4 py-8">
+      <main className="flex-grow container mx-auto px-4 pt-20 pb-8">
+        <div className="mt-6 mb-4">
+          <BackButton />
+        </div>
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold mb-2 text-gradient">AI-Powered DeFi Vaults</h1>
           <p className="text-white/70 max-w-3xl">
