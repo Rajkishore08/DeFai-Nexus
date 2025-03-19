@@ -1,6 +1,5 @@
-
 import { Card, CardContent } from '@/components/ui/card';
-import { PieChart, LineChart, ArrowUpRight, ArrowDownRight, Target, Refresh } from 'lucide-react';
+import { PieChart, LineChart, ArrowUpRight, ArrowDownRight, Target, RefreshCw } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 type AssetAllocation = {
@@ -214,7 +213,7 @@ const PortfolioOverview = () => {
           <Card className="bg-black/20 border border-white/10 p-6">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center">
-                <Refresh className="h-5 w-5 mr-2 text-defi-teal" />
+                <RefreshCw className="h-5 w-5 mr-2 text-defi-teal" />
                 <h3 className="text-xl font-medium text-white">AI-Optimized Portfolio Strategy</h3>
               </div>
               <span className="text-white/60 text-sm">Last updated: 2 hours ago</span>
