@@ -16,6 +16,7 @@ import MemeIndex from "./pages/MemeIndex";
 import MevProtection from "./pages/MevProtection";
 import Portfolio from "./pages/Portfolio";
 import TradeAnalysis from "./pages/TradeAnalysis";
+import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -40,6 +41,7 @@ const App = () => (
               <Route path="/mev-protection" element={<MevProtection />} />
               <Route path="/portfolio" element={<Portfolio />} />
               <Route path="/trade-analysis" element={<TradeAnalysis />} />
+              <Route path="/settings" element={<Settings />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>
