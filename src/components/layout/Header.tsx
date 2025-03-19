@@ -5,9 +5,12 @@ import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import ConnectWalletButton from '@/components/wallet/ConnectWalletButton';
+import WalletHeader from '@/components/wallet/WalletHeader';
+import { useWallet } from '@/contexts/WalletContext';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isConnected } = useWallet();
 
   const navLinks = [
     { name: 'Dashboard', path: '/dashboard' },
@@ -45,12 +48,12 @@ const Header = () => {
                 {link.name}
               </Link>
             ))}
-            <ConnectWalletButton />
+            {isConnected ? <WalletHeader /> : <ConnectWalletButton />}
           </nav>
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center">
-            <ConnectWalletButton />
+            {isConnected ? <WalletHeader /> : <ConnectWalletButton />}
             <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" className="ml-2">

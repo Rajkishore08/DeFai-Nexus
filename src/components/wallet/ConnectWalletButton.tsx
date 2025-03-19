@@ -1,12 +1,16 @@
 
-import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Wallet } from 'lucide-react';
 import WalletOptions from './WalletOptions';
+import { useWallet } from '@/contexts/WalletContext';
 
 const ConnectWalletButton = () => {
-  const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
+  const { isWalletModalOpen, setIsWalletModalOpen, isConnected } = useWallet();
+  
+  if (isConnected) {
+    return null; // Don't render the button if already connected
+  }
   
   return (
     <Dialog open={isWalletModalOpen} onOpenChange={setIsWalletModalOpen}>

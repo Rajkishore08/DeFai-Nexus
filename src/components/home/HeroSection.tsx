@@ -2,8 +2,12 @@
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ConnectWalletButton from '@/components/wallet/ConnectWalletButton';
+import { useWallet } from '@/contexts/WalletContext';
+import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
+  const { isConnected } = useWallet();
+  
   return (
     <div className="relative pt-20 pb-16 md:pt-32 md:pb-24 overflow-hidden">
       {/* Animated background elements */}
@@ -23,7 +27,17 @@ const HeroSection = () => {
           </p>
           
           <div className="flex flex-col md:flex-row gap-4 justify-center">
-            <ConnectWalletButton />
+            {isConnected ? (
+              <Link to="/dashboard">
+                <Button 
+                  className="bg-button-gradient hover:opacity-90 transition-opacity text-white font-medium"
+                >
+                  Go to Dashboard <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            ) : (
+              <ConnectWalletButton />
+            )}
             <Button 
               className="bg-white/10 hover:bg-white/20 text-white"
               onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
