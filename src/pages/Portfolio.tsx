@@ -14,7 +14,8 @@ import {
   ArrowUpRight, 
   ArrowDownRight,
   ShieldCheck,
-  AlertTriangle
+  AlertTriangle,
+  LineChartIcon
 } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -356,7 +357,7 @@ const Portfolio = () => {
             </CardHeader>
             <CardContent className="h-96 flex items-center justify-center">
               <div className="text-center text-white/60">
-                <LineChart className="h-16 w-16 mx-auto mb-4 opacity-50" />
+                <LineChartIcon className="h-16 w-16 mx-auto mb-4 opacity-50" />
                 <p>Performance chart would appear here</p>
                 <p className="text-sm">Showing daily, weekly, and monthly returns</p>
               </div>
