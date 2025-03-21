@@ -1,6 +1,6 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { toast } from '@/components/ui/use-toast';
+import { toast } from 'sonner';
 
 export type WalletType = 'Perta' | 'Petra' | 'Martian' | 'Pontem' | 'Rise';
 
@@ -13,6 +13,7 @@ interface WalletContextType {
   connectWallet: (walletType: WalletType) => Promise<boolean>;
   disconnectWallet: () => void;
   setIsWalletModalOpen: (isOpen: boolean) => void;
+  executeTransaction: (payload: any) => Promise<{ success: boolean; hash?: string; error?: string }>;
 }
 
 const WalletContext = createContext<WalletContextType | undefined>(undefined);
@@ -65,11 +66,7 @@ export const WalletProvider = ({ children }: WalletProviderProps) => {
       }, 1000);
     } catch (error) {
       console.error('Failed to fetch balance:', error);
-      toast({
-        title: "Error",
-        description: "Failed to fetch wallet balance",
-        variant: "destructive",
-      });
+      toast.error("Failed to fetch wallet balance");
     }
   };
 
@@ -79,11 +76,7 @@ export const WalletProvider = ({ children }: WalletProviderProps) => {
       const isWalletAvailable = checkWalletAvailability(type);
       
       if (!isWalletAvailable) {
-        toast({
-          title: "Wallet Not Installed",
-          description: `${type} wallet is not installed. Please install it to continue.`,
-          variant: "destructive",
-        });
+        toast.error(`${type} wallet is not installed. Please install it to continue.`);
         return false;
       }
 
@@ -108,19 +101,12 @@ export const WalletProvider = ({ children }: WalletProviderProps) => {
       // Fetch wallet balance
       fetchBalance(fakeAddress);
       
-      toast({
-        title: "Wallet Connected",
-        description: `Successfully connected to ${type} wallet`,
-      });
+      toast.success(`Successfully connected to ${type} wallet`);
       
       return true;
     } catch (error) {
       console.error(`Failed to connect ${type} wallet:`, error);
-      toast({
-        title: "Connection Failed",
-        description: `Failed to connect to ${type} wallet. Please try again.`,
-        variant: "destructive",
-      });
+      toast.error(`Failed to connect to ${type} wallet. Please try again.`);
       return false;
     }
   };
@@ -132,10 +118,7 @@ export const WalletProvider = ({ children }: WalletProviderProps) => {
     setWalletType(null);
     localStorage.removeItem('walletInfo');
     
-    toast({
-      title: "Wallet Disconnected",
-      description: "You have successfully disconnected your wallet",
-    });
+    toast.success("You have successfully disconnected your wallet");
   };
 
   const checkWalletAvailability = (walletType: WalletType): boolean => {
@@ -145,6 +128,43 @@ export const WalletProvider = ({ children }: WalletProviderProps) => {
     // This is just for demonstration - replace with actual wallet detection
     // e.g. return window.aptos !== undefined for Petra wallet
     return walletType !== 'Rise';
+  };
+
+  // Execute a transaction through the connected wallet
+  const executeTransaction = async (payload: any): Promise<{ success: boolean; hash?: string; error?: string }> => {
+    if (!isConnected || !walletAddress) {
+      return { success: false, error: 'Wallet not connected' };
+    }
+    
+    try {
+      // Simulate transaction execution
+      // In a real implementation, this would interact with the Aptos blockchain
+      console.log('Executing transaction with payload:', payload);
+      
+      // Simulate a successful transaction 90% of the time
+      if (Math.random() < 0.9) {
+        // Generate a fake transaction hash
+        const fakeHash = `0x${Array.from({length: 64}, () => Math.floor(Math.random() * 16).toString(16)).join('')}`;
+        
+        // Simulate transaction success
+        return { 
+          success: true, 
+          hash: fakeHash 
+        };
+      } else {
+        // Simulate transaction failure
+        return {
+          success: false,
+          error: 'Transaction rejected by user or blockchain'
+        };
+      }
+    } catch (error) {
+      console.error('Transaction error:', error);
+      return {
+        success: false,
+        error: 'Failed to execute transaction'
+      };
+    }
   };
 
   return (
@@ -158,6 +178,7 @@ export const WalletProvider = ({ children }: WalletProviderProps) => {
         connectWallet,
         disconnectWallet,
         setIsWalletModalOpen,
+        executeTransaction,
       }}
     >
       {children}

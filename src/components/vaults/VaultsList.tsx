@@ -1,13 +1,15 @@
 
 import { useState } from 'react';
-import { TrendingUp, ArrowRight, Info, BarChart3 } from 'lucide-react';
+import { TrendingUp, ArrowRight, Info, BarChart3, Loader2, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { toast } from 'sonner';
 import VaultDetailsDialog from './VaultDetailsDialog';
+import { useWallet } from '@/contexts/WalletContext';
 
 type Vault = {
   id: string;
@@ -95,10 +97,17 @@ type VaultsListProps = {
   riskLevel: 'high' | 'balanced' | 'low';
 };
 
+type TransactionStatus = 'idle' | 'connecting' | 'preparing' | 'signing' | 'broadcasting' | 'confirming' | 'success' | 'error';
+
 const VaultsList = ({ riskLevel }: VaultsListProps) => {
   const [selectedVault, setSelectedVault] = useState<Vault | null>(null);
   const [isDepositOpen, setIsDepositOpen] = useState(false);
   const [depositAmount, setDepositAmount] = useState('');
+  const [transactionStatus, setTransactionStatus] = useState<TransactionStatus>('idle');
+  const [transactionError, setTransactionError] = useState<string | null>(null);
+  const [estimatedGasFee, setEstimatedGasFee] = useState<string | null>(null);
+  
+  const { isConnected, walletType, connectWallet } = useWallet();
   
   // Filter vaults based on selected risk level
   const filteredVaults = riskLevel === 'balanced' 
@@ -112,14 +121,149 @@ const VaultsList = ({ riskLevel }: VaultsListProps) => {
   const handleDeposit = (vault: Vault) => {
     setSelectedVault(vault);
     setIsDepositOpen(true);
+    
+    // Simulate gas fee estimation
+    setTimeout(() => {
+      setEstimatedGasFee((Math.random() * 0.01).toFixed(5));
+    }, 500);
   };
   
-  const handleDepositSubmit = () => {
-    // This would handle the actual deposit transaction in a real implementation
-    console.log(`Depositing ${depositAmount} into vault ${selectedVault?.name}`);
-    setIsDepositOpen(false);
-    setDepositAmount('');
-    // Notification would go here in real implementation
+  const handleDepositSubmit = async () => {
+    if (!depositAmount || Number(depositAmount) <= 0) {
+      toast.error("Please enter a valid amount");
+      return;
+    }
+    
+    try {
+      // Step 1: Check wallet connection
+      if (!isConnected) {
+        setTransactionStatus('connecting');
+        
+        // Try to connect wallet
+        const connected = await connectWallet('Petra');
+        if (!connected) {
+          setTransactionStatus('error');
+          setTransactionError("Failed to connect wallet. Please try again.");
+          return;
+        }
+      }
+      
+      // Step 2: Prepare transaction
+      setTransactionStatus('preparing');
+      await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate preparation time
+      
+      // Step 3: Sign transaction
+      setTransactionStatus('signing');
+      await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate signing time
+      
+      // Step 4: Broadcast transaction
+      setTransactionStatus('broadcasting');
+      await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate broadcasting time
+      
+      // Step 5: Confirm transaction
+      setTransactionStatus('confirming');
+      await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate confirmation time
+      
+      // 95% chance of success (for demo purposes)
+      if (Math.random() > 0.05) {
+        setTransactionStatus('success');
+        
+        // Show success toast
+        toast.success(`Successfully deposited ${depositAmount} ${selectedVault?.tokens[0]} into ${selectedVault?.name}`, {
+          duration: 5000,
+        });
+        
+        // Close the dialog after success
+        setTimeout(() => {
+          setIsDepositOpen(false);
+          setTransactionStatus('idle');
+          setDepositAmount('');
+        }, 2000);
+      } else {
+        // Simulate failure for demo purposes
+        setTransactionStatus('error');
+        setTransactionError("Transaction failed on the blockchain. Network congestion detected.");
+      }
+    } catch (error) {
+      setTransactionStatus('error');
+      setTransactionError("An unexpected error occurred. Please try again.");
+      console.error("Deposit error:", error);
+    }
+  };
+  
+  const getTransactionStatusText = () => {
+    switch (transactionStatus) {
+      case 'connecting':
+        return 'Connecting to Perta Wallet...';
+      case 'preparing':
+        return 'Preparing Transaction...';
+      case 'signing':
+        return 'Waiting for Signature...';
+      case 'broadcasting':
+        return 'Broadcasting Transaction...';
+      case 'confirming':
+        return 'Confirming on Blockchain...';
+      case 'success':
+        return 'Deposit Successful!';
+      case 'error':
+        return 'Transaction Failed';
+      default:
+        return '';
+    }
+  };
+  
+  const handleRetry = () => {
+    setTransactionStatus('idle');
+    setTransactionError(null);
+    handleDepositSubmit();
+  };
+  
+  const renderTransactionStatus = () => {
+    if (transactionStatus === 'idle') return null;
+    
+    return (
+      <div className="bg-black/30 p-4 rounded-md mt-4">
+        <div className="flex items-center justify-between mb-2">
+          <h4 className="text-sm font-medium">Transaction Status</h4>
+          {transactionStatus === 'success' && (
+            <span className="text-green-500 bg-green-500/10 px-2 py-1 rounded text-xs font-medium">Success</span>
+          )}
+          {transactionStatus === 'error' && (
+            <span className="text-red-500 bg-red-500/10 px-2 py-1 rounded text-xs font-medium">Failed</span>
+          )}
+          {['connecting', 'preparing', 'signing', 'broadcasting', 'confirming'].includes(transactionStatus) && (
+            <span className="text-yellow-500 bg-yellow-500/10 px-2 py-1 rounded text-xs font-medium">Processing</span>
+          )}
+        </div>
+        
+        <div className="flex items-center mb-3">
+          {['connecting', 'preparing', 'signing', 'broadcasting', 'confirming'].includes(transactionStatus) ? (
+            <Loader2 className="h-5 w-5 mr-2 text-defi-teal animate-spin" />
+          ) : transactionStatus === 'success' ? (
+            <CheckCircle2 className="h-5 w-5 mr-2 text-green-500" />
+          ) : (
+            <AlertCircle className="h-5 w-5 mr-2 text-red-500" />
+          )}
+          <span className="text-sm">{getTransactionStatusText()}</span>
+        </div>
+        
+        {transactionError && (
+          <div className="text-red-400 text-xs mb-3">
+            {transactionError}
+          </div>
+        )}
+        
+        {transactionStatus === 'error' && (
+          <Button 
+            size="sm" 
+            className="w-full bg-defi-gradient hover:opacity-90" 
+            onClick={handleRetry}
+          >
+            Retry Transaction
+          </Button>
+        )}
+      </div>
+    );
   };
   
   return (
@@ -201,8 +345,17 @@ const VaultsList = ({ riskLevel }: VaultsListProps) => {
       
       {/* Deposit Dialog */}
       <Dialog open={isDepositOpen} onOpenChange={(open) => {
+        if (transactionStatus !== 'idle' && transactionStatus !== 'success' && transactionStatus !== 'error') {
+          // Prevent closing during transaction
+          return;
+        }
         setIsDepositOpen(open);
-        if (!open) setDepositAmount('');
+        if (!open) {
+          setDepositAmount('');
+          setTransactionStatus('idle');
+          setTransactionError(null);
+          setEstimatedGasFee(null);
+        }
       }}>
         <DialogContent className="glass border border-white/10 sm:max-w-md">
           <DialogHeader>
@@ -221,6 +374,7 @@ const VaultsList = ({ riskLevel }: VaultsListProps) => {
                 type="number"
                 value={depositAmount}
                 onChange={(e) => setDepositAmount(e.target.value)}
+                disabled={transactionStatus !== 'idle'}
               />
               <p className="text-sm text-white/60">
                 AI will optimally allocate your funds based on your risk preference: <span className="font-medium text-defi-teal">{riskLevel.charAt(0).toUpperCase() + riskLevel.slice(1)}</span>
@@ -248,14 +402,31 @@ const VaultsList = ({ riskLevel }: VaultsListProps) => {
                 <p className="text-sm text-white/60">Enter an amount to see estimated returns</p>
               )}
             </div>
+            
+            {estimatedGasFee && transactionStatus === 'idle' && (
+              <div className="bg-black/20 p-3 rounded-md">
+                <div className="flex justify-between text-sm">
+                  <span className="text-white/60">Estimated Gas Fee:</span>
+                  <span className="text-white">{estimatedGasFee} APT</span>
+                </div>
+              </div>
+            )}
+            
+            {renderTransactionStatus()}
           </div>
           
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsDepositOpen(false)}>Cancel</Button>
+            <Button 
+              variant="outline" 
+              onClick={() => setIsDepositOpen(false)}
+              disabled={transactionStatus !== 'idle' && transactionStatus !== 'success' && transactionStatus !== 'error'}
+            >
+              Cancel
+            </Button>
             <Button 
               className="bg-defi-gradient hover:opacity-90 text-white"
               onClick={handleDepositSubmit}
-              disabled={!depositAmount || isNaN(Number(depositAmount)) || Number(depositAmount) <= 0}
+              disabled={!depositAmount || isNaN(Number(depositAmount)) || Number(depositAmount) <= 0 || transactionStatus !== 'idle'}
             >
               Confirm Deposit
             </Button>

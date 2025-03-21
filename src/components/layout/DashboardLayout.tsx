@@ -6,6 +6,7 @@ import Sidebar from './Sidebar';
 import { useWallet } from '@/contexts/WalletContext';
 import { Navigate } from 'react-router-dom';
 import BackButton from '@/components/shared/BackButton';
+import { Toaster } from 'sonner';
 
 interface DashboardLayoutProps {
   children: ReactNode;
@@ -44,6 +45,7 @@ const DashboardLayout = ({ children, title, description }: DashboardLayoutProps)
         </main>
       </div>
       <Footer />
+      <Toaster richColors position="top-right" />
     </div>
   );
 };
