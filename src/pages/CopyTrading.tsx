@@ -121,9 +121,8 @@ const CopyTrading = () => {
   const confirmFollow = () => {
     if (selectedTrader && !followedTraders.includes(selectedTrader.id)) {
       setFollowedTraders([...followedTraders, selectedTrader.id]);
-      toast({
-        title: "Trader Followed",
-        description: `You are now following ${selectedTrader.name}. Copying ${copyPercentage}% of their trades.`,
+      toast(`You are now following ${selectedTrader.name}. Copying ${copyPercentage}% of their trades.`, {
+        description: "You'll receive notifications for each copied trade."
       });
     }
     setIsDialogOpen(false);
@@ -131,19 +130,17 @@ const CopyTrading = () => {
 
   const unfollowTrader = (traderId: string) => {
     setFollowedTraders(followedTraders.filter(id => id !== traderId));
-    toast({
-      title: "Trader Unfollowed",
-      description: "You will no longer copy trades from this trader.",
+    toast("Trader Unfollowed", {
+      description: "You will no longer copy trades from this trader."
     });
   };
 
   const toggleAutoTrading = () => {
     setIsAutoTrading(!isAutoTrading);
-    toast({
-      title: isAutoTrading ? "Auto-Trading Disabled" : "Auto-Trading Enabled",
+    toast(isAutoTrading ? "Auto-Trading Disabled" : "Auto-Trading Enabled", {
       description: isAutoTrading 
         ? "You will need to approve trades manually." 
-        : "AI will automatically execute trades on your behalf.",
+        : "AI will automatically execute trades on your behalf."
     });
   };
 
@@ -579,3 +576,4 @@ const CopyTrading = () => {
 };
 
 export default CopyTrading;
+
