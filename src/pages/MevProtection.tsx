@@ -98,14 +98,14 @@ const MevProtection = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="flex-grow container mx-auto px-4 py-8 pt-20">
-        <div className="mt-6 mb-6">
+      <main className="flex-grow container mx-auto px-4 py-8 pt-24 pb-16">
+        <div className="mt-6 mb-4">
           <BackButton />
         </div>
 
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2 text-white">Smart MEV Protection</h1>
-          <p className="text-white/70">
+          <p className="text-white/70 max-w-3xl">
             Shield your transactions from front-running attacks with AI-powered defense mechanisms.
           </p>
         </div>

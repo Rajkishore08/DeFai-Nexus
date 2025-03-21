@@ -5,6 +5,7 @@ import Footer from './Footer';
 import Sidebar from './Sidebar';
 import { useWallet } from '@/contexts/WalletContext';
 import { Navigate } from 'react-router-dom';
+import BackButton from '@/components/shared/BackButton';
 
 interface DashboardLayoutProps {
   children: ReactNode;
@@ -27,6 +28,9 @@ const DashboardLayout = ({ children, title, description }: DashboardLayoutProps)
         <Sidebar />
         <main className="flex-grow md:ml-64 pt-24 pb-16">
           <div className="container px-4 py-6 max-w-7xl mx-auto">
+            <div className="mt-6 mb-2">
+              <BackButton />
+            </div>
             <div className="mb-8">
               <h1 className="text-3xl md:text-4xl font-bold mb-2 text-gradient">{title}</h1>
               {description && (
