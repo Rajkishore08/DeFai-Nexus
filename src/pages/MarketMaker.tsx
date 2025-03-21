@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -137,10 +136,10 @@ const MarketMaker = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="flex-grow container mx-auto px-4 py-6">
-        <div className="mb-6">
+      <main className="flex-grow container mx-auto px-4 pt-24 pb-16">
+        <div className="mt-6 mb-8">
           <h1 className="text-3xl font-bold text-white mb-2">AI Market Making</h1>
-          <p className="text-white/70">
+          <p className="text-white/70 max-w-3xl">
             Our AI dynamically sets bid/ask prices to maximize market making profits.
           </p>
         </div>
@@ -676,3 +675,4 @@ const MarketMaker = () => {
 };
 
 export default MarketMaker;
+
