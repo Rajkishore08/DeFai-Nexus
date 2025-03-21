@@ -25,27 +25,25 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <WalletProvider>
       <BrowserRouter>
-        <TooltipProvider>
-          <div className="min-h-screen flex flex-col">
-            <Toaster />
-            <Sonner />
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/vaults" element={<Vaults />} />
-              <Route path="/market-maker" element={<MarketMaker />} />
-              <Route path="/arbitrage" element={<Arbitrage />} />
-              <Route path="/copy-trading" element={<CopyTrading />} />
-              <Route path="/token-predictor" element={<TokenPredictor />} />
-              <Route path="/meme-index" element={<MemeIndex />} />
-              <Route path="/mev-protection" element={<MevProtection />} />
-              <Route path="/portfolio" element={<Portfolio />} />
-              <Route path="/trade-analysis" element={<TradeAnalysis />} />
-              <Route path="/settings" element={<Settings />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </div>
-        </TooltipProvider>
+        <div className="min-h-screen flex flex-col">
+          <Toaster />
+          <Sonner />
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/vaults" element={<Vaults />} />
+            <Route path="/market-maker" element={<MarketMaker />} />
+            <Route path="/arbitrage" element={<Arbitrage />} />
+            <Route path="/copy-trading" element={<CopyTrading />} />
+            <Route path="/token-predictor" element={<TokenPredictor />} />
+            <Route path="/meme-index" element={<MemeIndex />} />
+            <Route path="/mev-protection" element={<MevProtection />} />
+            <Route path="/portfolio" element={<Portfolio />} />
+            <Route path="/trade-analysis" element={<TradeAnalysis />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
       </BrowserRouter>
     </WalletProvider>
   </QueryClientProvider>
