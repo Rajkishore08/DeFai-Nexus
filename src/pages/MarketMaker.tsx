@@ -65,7 +65,7 @@ const tokenPairs = [
 ];
 
 const MarketMaker = () => {
-  const [activeTab, setActiveTab] = useState('orderBook');
+  const [activeTab, setActiveTab] = useState('liveMarketOrders');
   const [orderType, setOrderType] = useState('market');
   const [orderSide, setOrderSide] = useState('buy');
   const [selectedPair, setSelectedPair] = useState('ETH/USDC');
@@ -315,19 +315,19 @@ const MarketMaker = () => {
           
           {/* Middle & Right Columns - Order Book & Data */}
           <div className="lg:col-span-2 space-y-6">
-            <Tabs defaultValue="orderBook" className="w-full" onValueChange={setActiveTab}>
+            <Tabs defaultValue="liveMarketOrders" className="w-full" onValueChange={setActiveTab}>
               <TabsList className="grid grid-cols-3 mb-4">
-                <TabsTrigger value="orderBook">Order Book</TabsTrigger>
+                <TabsTrigger value="liveMarketOrders">Live Market Orders</TabsTrigger>
                 <TabsTrigger value="orders">Your Orders</TabsTrigger>
                 <TabsTrigger value="performance">Performance</TabsTrigger>
               </TabsList>
               
-              {/* Order Book Tab */}
-              <TabsContent value="orderBook" className="m-0">
+              {/* Live Market Orders Tab (renamed from Order Book) */}
+              <TabsContent value="liveMarketOrders" className="m-0">
                 <Card className="bg-black/20 border border-white/10">
                   <CardHeader className="pb-3">
                     <div className="flex justify-between items-center">
-                      <CardTitle className="text-xl">Order Book</CardTitle>
+                      <CardTitle className="text-xl">Live Market Orders</CardTitle>
                       <div className="text-right">
                         <div className="text-sm text-white/70">Spread:</div>
                         <div className="font-bold text-defi-teal">
@@ -675,4 +675,3 @@ const MarketMaker = () => {
 };
 
 export default MarketMaker;
-
