@@ -1,0 +1,25 @@
+[package]
+name = "DeFAI_Nexus"
+version = "0.1.0"
+authors = ["Your Name or Team"]
+license = "Apache-2.0"
+edition = "2024"
+
+[addresses]
+deFAI_nexus = "0x1"
+
+[dependencies]
+MoveStdlib = { local = "../move-stdlib" }
+AptosFramework = { local = "../aptos-framework" }
+
+[dev-dependencies]
+MoveUnitTest = { local = "../move-stdlib" }
+
+[build]
+dev_mode = false
+test_mode = true
+generate_docs = true
+
+[tests]
+coverage = true
+fail_fast = true
