@@ -1,7 +1,7 @@
-
 import { useState } from 'react';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import PortfolioOverview from '@/components/portfolio/PortfolioOverview';
+import InvestmentGoalsDialog from '@/components/portfolio/InvestmentGoalsDialog';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -19,9 +19,13 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 
+type InvestmentGoal = 'growth' | 'income' | 'balanced';
+
 const Portfolio = () => {
   const [isOptimizing, setIsOptimizing] = useState(false);
   const [riskProtection, setRiskProtection] = useState(true);
+  const [investmentGoal, setInvestmentGoal] = useState<InvestmentGoal>('balanced');
+  const [isInvestmentGoalDialogOpen, setIsInvestmentGoalDialogOpen] = useState(false);
   
   const handleOptimizePortfolio = () => {
     setIsOptimizing(true);
@@ -38,6 +42,12 @@ const Portfolio = () => {
       ? 'Risk protection disabled' 
       : 'Risk protection enabled - your portfolio is now protected from MEV attacks and liquidation risks'
     );
+  };
+
+  const handleSaveInvestmentGoal = (goal: InvestmentGoal) => {
+    setInvestmentGoal(goal);
+    // In a real app, we would save this to the backend
+    console.log(`Investment goal updated to: ${goal}`);
   };
   
   // Mock portfolio data
@@ -196,11 +206,16 @@ const Portfolio = () => {
           </div>
           
           <p className="text-sm text-white/70 mb-4 flex-grow">
-            Set your investment strategy preferences to guide AI allocation decisions.
-            Choose between growth, income, or balanced approaches.
+            {investmentGoal === 'growth' && 'Currently optimized for growth with higher risk tolerance and potential returns.'}
+            {investmentGoal === 'income' && 'Currently optimized for stable income through staking and lending.'}
+            {investmentGoal === 'balanced' && 'Currently using a balanced approach with diversified risk and return.'}
           </p>
           
-          <Button variant="outline" className="w-full border-white/20 text-white hover:bg-white/10">
+          <Button 
+            variant="outline" 
+            className="w-full border-white/20 text-white hover:bg-white/10"
+            onClick={() => setIsInvestmentGoalDialogOpen(true)}
+          >
             Adjust Investment Goals
             <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
@@ -413,6 +428,14 @@ const Portfolio = () => {
           </Card>
         </TabsContent>
       </Tabs>
+      
+      {/* Investment Goals Dialog */}
+      <InvestmentGoalsDialog
+        open={isInvestmentGoalDialogOpen}
+        onOpenChange={setIsInvestmentGoalDialogOpen}
+        currentGoal={investmentGoal}
+        onSave={handleSaveInvestmentGoal}
+      />
     </DashboardLayout>
   );
 };

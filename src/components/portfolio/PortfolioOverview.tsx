@@ -57,7 +57,6 @@ const PortfolioOverview = () => {
                 <span className="text-sm font-medium">AI Optimized</span>
               </div>
               <div className="h-full w-full" style={{ position: 'relative' }}>
-                {/* This would be a real chart in production */}
                 {mockAssetAllocation.map((asset, index) => (
                   <div 
                     key={asset.category}
