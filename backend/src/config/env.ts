@@ -1,40 +1,16 @@
-// config/blockchain.ts
+// config/env.ts
 
-interface ChainConfig {
-  name: string;
-  rpcUrl: string;
-  chainId: number;
-  explorerUrl: string;
-  nativeToken: string;
-}
+import dotenv from 'dotenv';
+dotenv.config();
 
-export const BLOCKCHAIN_CONFIG: Record<string, ChainConfig> = {
-  aptos: {
-    name: "Aptos",
-    rpcUrl: "https://fullnode.mainnet.aptoslabs.com",
-    chainId: 1,
-    explorerUrl: "https://explorer.aptoslabs.com/",
-    nativeToken: "APT"
-  },
-  ethereum: {
-    name: "Ethereum",
-    rpcUrl: "https://mainnet.infura.io/v3/${INFURA_PROJECT_ID}",
-    chainId: 1,
-    explorerUrl: "https://etherscan.io/",
-    nativeToken: "ETH"
-  },
-  solana: {
-    name: "Solana",
-    rpcUrl: "https://api.mainnet-beta.solana.com",
-    chainId: 101, // Example placeholder
-    explorerUrl: "https://solscan.io/",
-    nativeToken: "SOL"
-  },
-  bsc: {
-    name: "Binance Smart Chain",
-    rpcUrl: "https://bsc-dataseed.binance.org/",
-    chainId: 56,
-    explorerUrl: "https://bscscan.com/",
-    nativeToken: "BNB"
-  }
+export const ENV = {
+  INFURA_PROJECT_ID: process.env.INFURA_PROJECT_ID || '',
+  APTOS_PRIVATE_KEY: process.env.APTOS_PRIVATE_KEY || '',
+  ETH_PRIVATE_KEY: process.env.ETH_PRIVATE_KEY || '',
+  SOLANA_PRIVATE_KEY: process.env.SOLANA_PRIVATE_KEY || '',
+  BSC_PRIVATE_KEY: process.env.BSC_PRIVATE_KEY || '',
+  AI_API_KEY: process.env.AI_API_KEY || '', // For AI models (price prediction, sentiment)
+  FLASH_LOAN_PROVIDER_URL: process.env.FLASH_LOAN_PROVIDER_URL || '',
+  DATABASE_URL: process.env.DATABASE_URL || '',
+  NOTIFICATION_SERVICE_URL: process.env.NOTIFICATION_SERVICE_URL || ''
 };
