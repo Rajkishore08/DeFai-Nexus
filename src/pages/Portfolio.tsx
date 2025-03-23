@@ -1,7 +1,12 @@
+
 import { useState } from 'react';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import PortfolioOverview from '@/components/portfolio/PortfolioOverview';
 import InvestmentGoalsDialog from '@/components/portfolio/InvestmentGoalsDialog';
+import RebalanceDialog from '@/components/portfolio/RebalanceDialog';
+import InvestmentOpportunityDialog from '@/components/portfolio/InvestmentOpportunityDialog';
+import RiskMitigationDialog from '@/components/portfolio/RiskMitigationDialog';
+import ManageAssetDialog from '@/components/portfolio/ManageAssetDialog';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -20,12 +25,49 @@ import {
 import { toast } from 'sonner';
 
 type InvestmentGoal = 'growth' | 'income' | 'balanced';
+type AssetType = 'staking' | 'liquidity-pool' | 'lending' | 'yield-farming';
 
 const Portfolio = () => {
   const [isOptimizing, setIsOptimizing] = useState(false);
   const [riskProtection, setRiskProtection] = useState(true);
   const [investmentGoal, setInvestmentGoal] = useState<InvestmentGoal>('balanced');
   const [isInvestmentGoalDialogOpen, setIsInvestmentGoalDialogOpen] = useState(false);
+  
+  // New dialog state
+  const [isRebalanceDialogOpen, setIsRebalanceDialogOpen] = useState(false);
+  const [isInvestmentOpportunityDialogOpen, setIsInvestmentOpportunityDialogOpen] = useState(false);
+  const [isRiskMitigationDialogOpen, setIsRiskMitigationDialogOpen] = useState(false);
+  const [isManageAssetDialogOpen, setIsManageAssetDialogOpen] = useState(false);
+  const [selectedAsset, setSelectedAsset] = useState<{
+    name: string;
+    platform: string;
+    strategy: AssetType;
+    value: number;
+    apy: number;
+  } | null>(null);
+  
+  // Mock data
+  const investmentOpportunity = {
+    name: 'APT/ARB Farming Pool',
+    platform: 'Pontem DEX',
+    estimatedApy: '22.8%',
+    description: 'This new farming pool offers boosted rewards for early liquidity providers. The pool is secured by the protocol and offers auto-compounding features.',
+    minInvestment: 500,
+    maxInvestment: 10000,
+    duration: '30 days lock-up period',
+    riskLevel: 'medium' as const
+  };
+  
+  const riskWarningDetails = {
+    title: 'Liquidation Risk',
+    asset: 'WBTC Lending',
+    description: 'Your collateral ratio is approaching minimum threshold (125%)',
+    severity: 'high' as const,
+    currentRatio: 132,
+    minimumRatio: 125,
+    recommendedAction: 'add-collateral' as const,
+    recommendedAmount: 500
+  };
   
   const handleOptimizePortfolio = () => {
     setIsOptimizing(true);
@@ -48,6 +90,17 @@ const Portfolio = () => {
     setInvestmentGoal(goal);
     // In a real app, we would save this to the backend
     console.log(`Investment goal updated to: ${goal}`);
+  };
+  
+  const handleManageAsset = (asset: {
+    name: string;
+    platform: string;
+    strategy: AssetType;
+    value: number;
+    apy: number;
+  }) => {
+    setSelectedAsset(asset);
+    setIsManageAssetDialogOpen(true);
   };
   
   // Mock portfolio data
@@ -324,7 +377,19 @@ const Portfolio = () => {
                       <td className="py-3 px-4 text-white">$4,200</td>
                       <td className="py-3 px-4 text-defi-teal">4.8%</td>
                       <td className="py-3 px-4">
-                        <Button variant="ghost" size="sm">Manage</Button>
+                        <Button 
+                          variant="ghost" 
+                          size="sm"
+                          onClick={() => handleManageAsset({
+                            name: 'APT',
+                            platform: 'Liquid Staking',
+                            strategy: 'staking',
+                            value: 4200,
+                            apy: 4.8
+                          })}
+                        >
+                          Manage
+                        </Button>
                       </td>
                     </tr>
                     <tr className="border-b border-white/5">
@@ -334,7 +399,19 @@ const Portfolio = () => {
                       <td className="py-3 px-4 text-white">$3,800</td>
                       <td className="py-3 px-4 text-defi-teal">18.5%</td>
                       <td className="py-3 px-4">
-                        <Button variant="ghost" size="sm">Manage</Button>
+                        <Button 
+                          variant="ghost" 
+                          size="sm"
+                          onClick={() => handleManageAsset({
+                            name: 'USDC/APT',
+                            platform: 'Econia',
+                            strategy: 'liquidity-pool',
+                            value: 3800,
+                            apy: 18.5
+                          })}
+                        >
+                          Manage
+                        </Button>
                       </td>
                     </tr>
                     <tr className="border-b border-white/5">
@@ -344,7 +421,19 @@ const Portfolio = () => {
                       <td className="py-3 px-4 text-white">$2,500</td>
                       <td className="py-3 px-4 text-defi-teal">3.1%</td>
                       <td className="py-3 px-4">
-                        <Button variant="ghost" size="sm">Manage</Button>
+                        <Button 
+                          variant="ghost" 
+                          size="sm"
+                          onClick={() => handleManageAsset({
+                            name: 'WBTC',
+                            platform: 'Aries',
+                            strategy: 'lending',
+                            value: 2500,
+                            apy: 3.1
+                          })}
+                        >
+                          Manage
+                        </Button>
                       </td>
                     </tr>
                     <tr>
@@ -354,7 +443,19 @@ const Portfolio = () => {
                       <td className="py-3 px-4 text-white">$2,080</td>
                       <td className="py-3 px-4 text-defi-teal">24.1%</td>
                       <td className="py-3 px-4">
-                        <Button variant="ghost" size="sm">Manage</Button>
+                        <Button 
+                          variant="ghost" 
+                          size="sm"
+                          onClick={() => handleManageAsset({
+                            name: 'APT/USDT',
+                            platform: 'Aptoswap',
+                            strategy: 'yield-farming',
+                            value: 2080,
+                            apy: 24.1
+                          })}
+                        >
+                          Manage
+                        </Button>
                       </td>
                     </tr>
                   </tbody>
@@ -397,7 +498,12 @@ const Portfolio = () => {
                     Our AI suggests reducing your exposure to WBTC by 10% and increasing your 
                     position in the APT/USDT liquidity pool for better risk-adjusted returns.
                   </p>
-                  <Button className="bg-defi-gradient hover:opacity-90">Apply Recommendation</Button>
+                  <Button 
+                    className="bg-defi-gradient hover:opacity-90"
+                    onClick={() => setIsRebalanceDialogOpen(true)}
+                  >
+                    Apply Recommendation
+                  </Button>
                 </div>
                 
                 <div className="bg-black/40 p-4 rounded-md">
@@ -409,7 +515,12 @@ const Portfolio = () => {
                     Consider allocating $1,200 to the newly launched Aptos/ARB farming pool on Pontem DEX,
                     which is offering boosted rewards for early liquidity providers.
                   </p>
-                  <Button className="bg-defi-gradient hover:opacity-90">Invest Now</Button>
+                  <Button 
+                    className="bg-defi-gradient hover:opacity-90"
+                    onClick={() => setIsInvestmentOpportunityDialogOpen(true)}
+                  >
+                    Invest Now
+                  </Button>
                 </div>
                 
                 <div className="bg-black/40 p-4 rounded-md">
@@ -421,7 +532,12 @@ const Portfolio = () => {
                     To prevent potential liquidation, we recommend adding more collateral to your 
                     WBTC lending position or withdrawing a portion of your borrowed assets.
                   </p>
-                  <Button className="bg-defi-gradient hover:opacity-90">Take Action</Button>
+                  <Button 
+                    className="bg-defi-gradient hover:opacity-90"
+                    onClick={() => setIsRiskMitigationDialogOpen(true)}
+                  >
+                    Take Action
+                  </Button>
                 </div>
               </div>
             </CardContent>
@@ -429,13 +545,40 @@ const Portfolio = () => {
         </TabsContent>
       </Tabs>
       
-      {/* Investment Goals Dialog */}
+      {/* All Dialogs */}
       <InvestmentGoalsDialog
         open={isInvestmentGoalDialogOpen}
         onOpenChange={setIsInvestmentGoalDialogOpen}
         currentGoal={investmentGoal}
         onSave={handleSaveInvestmentGoal}
       />
+      
+      <RebalanceDialog
+        open={isRebalanceDialogOpen}
+        onOpenChange={setIsRebalanceDialogOpen}
+        potentialImprovement="+3.4%"
+        recommendation="Our AI suggests reducing your exposure to WBTC by 10% and increasing your position in the APT/USDT liquidity pool for better risk-adjusted returns."
+      />
+      
+      <InvestmentOpportunityDialog
+        open={isInvestmentOpportunityDialogOpen}
+        onOpenChange={setIsInvestmentOpportunityDialogOpen}
+        opportunity={investmentOpportunity}
+      />
+      
+      <RiskMitigationDialog
+        open={isRiskMitigationDialogOpen}
+        onOpenChange={setIsRiskMitigationDialogOpen}
+        risk={riskWarningDetails}
+      />
+      
+      {selectedAsset && (
+        <ManageAssetDialog
+          open={isManageAssetDialogOpen}
+          onOpenChange={setIsManageAssetDialogOpen}
+          asset={selectedAsset}
+        />
+      )}
     </DashboardLayout>
   );
 };
