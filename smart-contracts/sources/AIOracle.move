@@ -38,7 +38,7 @@ module DeFAI_Nexus::AIOracle {
             market_price - adjustment 
         };
 
-        let confidence = 85 + (market_price % 6) as u8; // Simulated confidence between 85-90%
+        let confidence = 85 + (market_price % 6) as u8; 
         let timestamp = timestamp::now_seconds(); // Blockchain timestamp for accuracy
 
         let prediction = Prediction {
