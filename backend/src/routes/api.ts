@@ -8,7 +8,6 @@ const router = express.Router();
 const NODE_URL = process.env.APTOS_NODE_URL || 'https://fullnode.devnet.aptoslabs.com';
 const client = new AptosClient(NODE_URL);
 
-// Simple health check route
 router.get('/status', (_req, res) => {
   res.json({ status: 'API is running' });
 });
