@@ -1,4 +1,3 @@
-// config/blockchain.ts
 
 interface ChainConfig {
   name: string;
@@ -11,9 +10,9 @@ interface ChainConfig {
 export const BLOCKCHAIN_CONFIG: Record<string, ChainConfig> = {
   aptos: {
     name: "Aptos",
-    rpcUrl: "https://fullnode.mainnet.aptoslabs.com",
+    rpcUrl: "",
     chainId: 1,
-    explorerUrl: "https://explorer.aptoslabs.com/",
+    explorerUrl: "",
     nativeToken: "APT"
   },
   ethereum: {
@@ -26,13 +25,13 @@ export const BLOCKCHAIN_CONFIG: Record<string, ChainConfig> = {
   solana: {
     name: "Solana",
     rpcUrl: "https://api.mainnet-beta.solana.com",
-    chainId: 101, // Example placeholder
+    chainId: 101, 
     explorerUrl: "https://solscan.io/",
     nativeToken: "SOL"
   },
   bsc: {
     name: "Binance Smart Chain",
-    rpcUrl: "https://bsc-dataseed.binance.org/",
+    rpcUrl: "",
     chainId: 56,
     explorerUrl: "https://bscscan.com/",
     nativeToken: "BNB"
