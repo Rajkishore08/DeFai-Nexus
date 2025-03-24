@@ -11,11 +11,10 @@ const PRIVATE_KEY = process.env.PRIVATE_KEY || '';
 const client = new AptosClient(NODE_URL);
 const account = new AptosAccount(HexString.ensure(PRIVATE_KEY).toUint8Array());
 
-// Add liquidity endpoint
 router.post('/add', async (req, res) => {
   const { tokenA, tokenB, amountA, amountB } = req.body;
   try {
-    // Mock transaction (Replace with actual smart contract call)
+  
     const txn = await client.generateTransaction(account.address(), {
       function: '0x1::LiquidityPool::add_liquidity',
       typeArguments: [tokenA, tokenB],
