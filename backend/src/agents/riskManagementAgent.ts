@@ -119,7 +119,6 @@ class RiskManagementAgent {
   }
 }
 
-// Example usage
 const rpcUrl = process.env.RPC_URL || '';
 const privateKey = process.env.PRIVATE_KEY || '';
 
