@@ -12,34 +12,34 @@ DeFAI-Nexus is an **autonomous DeFi management platform** that leverages **AI ag
 ## ✨ Key Features  
 
 ### 📌 **AI-Powered DeFi Vaults**  
-💰 Smart staking and yield farming strategies that adapt to real-time market conditions.  
+ Smart staking and yield farming strategies that adapt to real-time market conditions.  
 
 ### 📌 **AI Market Making**  
-📈 Automated bid/ask pricing for optimal profit from order book trading.  
+ Automated bid/ask pricing for optimal profit from order book trading.  
 
 ### 📌 **DEX Arbitrage Trader**  
-🔁 Scans multiple DEXs in **milliseconds** to identify and execute **profitable arbitrage trades**.  
+ Scans multiple DEXs in **milliseconds** to identify and execute **profitable arbitrage trades**.  
 
 ### 📌 **Copy Trading Agent**  
-📊 AI **mirrors top traders' strategies** to maximize gains.  
+ AI **mirrors top traders' strategies** to maximize gains.  
 
 ### 📌 **Token Value Predictor**  
-📉 **AI-powered forecasting** for token prices based on **technical + on-chain data**.  
+ **AI-powered forecasting** for token prices based on **technical + on-chain data**.  
 
 ### 📌 **Meme Index Tracker**  
-🚀 Stay ahead of **viral meme coins** with AI-driven **social sentiment analysis**.  
+ Stay ahead of **viral meme coins** with AI-driven **social sentiment analysis**.  
 
 ### 📌 **Smart MEV Protection**  
-🛡️ Shields transactions from **front-running & sandwich attacks** using AI-powered defense mechanisms.  
+ Shields transactions from **front-running & sandwich attacks** using AI-powered defense mechanisms.  
 
 ### 📌 **Portfolio Managers**  
-🔄 **Automated portfolio balancing** across DeFi platforms for **optimal risk-adjusted returns**.  
+ **Automated portfolio balancing** across DeFi platforms for **optimal risk-adjusted returns**.  
 
 ### 📌 **Trade Analysis Agents**  
-📊 **AI-driven trade insights** to refine and enhance trading strategies.  
+ **AI-driven trade insights** to refine and enhance trading strategies.  
 
 ### 📌 **Portfolio Dashboard**  
-📡 Comprehensive analytics on **asset performance & DeFi positions**.  
+ Comprehensive analytics on **asset performance & DeFi positions**.  
 
 
 ![image](https://github.com/user-attachments/assets/4f22e0fd-cf24-4ee6-827d-a2826b3b6dfd)
