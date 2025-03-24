@@ -1,6 +1,8 @@
 
 # 🌐 DeFAI-Nexus – AI-Powered DeFi Smart Account  
 
+![image](https://github.com/user-attachments/assets/33e8a803-8d06-4129-884a-6730468cce57)
+
 DeFAI-Nexus is an **autonomous DeFi management platform** that leverages **AI agents** to optimize **liquidity management, yield farming, arbitrage trading, and risk-adjusted portfolio allocation**. It integrates **multi-agent swarm intelligence** to automate trading, asset allocation, and market-making across DeFi protocols.  
 
 🚀 Built for the **Move AI HAckathon**, DeFAI-Nexus brings **cutting-edge AI DeFi automation**, flash loans, cross-chain arbitrage, and MEV protection.  
@@ -38,6 +40,10 @@ DeFAI-Nexus is an **autonomous DeFi management platform** that leverages **AI ag
 
 ### 📌 **Portfolio Dashboard**  
 📡 Comprehensive analytics on **asset performance & DeFi positions**.  
+
+
+![image](https://github.com/user-attachments/assets/4f22e0fd-cf24-4ee6-827d-a2826b3b6dfd)
+![image](https://github.com/user-attachments/assets/eb37dda2-7241-4f5f-9c44-f74779ba4ded)
 
 ---
 
@@ -88,7 +94,7 @@ DeFAI-Nexus/
 
 ### 1️⃣ Clone the Repository  
 ```sh
-git clone https://github.com/your-repo/DeFAI-Nexus.git
+git clone https://github.com/Rajkishore08/DeFai-Nexus
 cd DeFAI-Nexus
 ```
 
